@@ -26,7 +26,7 @@ def get_image_as_base64(path_str):
 
 # --- FORMULÁRIO DE LOGIN ---
 def login_form():
-    image_path = "E:/atual - PECPLE/PEC-PLE/login_capa.jpg"
+    image_path = "login_capa.jpg"
     image_base64 = get_image_as_base64(image_path)
 
     CUSTOM_CSS = f"""
@@ -101,4 +101,5 @@ if __name__ == "__main__":
         st.write(f"Bem-vindo à sua aplicação, {user}!")
         if st.button("Sair"):
             st.session_state["logged_in"] = False
+
             st.rerun()
