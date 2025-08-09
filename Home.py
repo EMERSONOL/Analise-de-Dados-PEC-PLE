@@ -32,7 +32,7 @@ if not st.session_state["logged_in"]:
 # --- INTERFACE PRINCIPAL DO DASHBOARD (SÓ APARECE APÓS LOGIN) ---
 else:
     # Exibe o logo no topo
-    logo_path = "logo.png"  # Altere para o seu caminho se necessário
+    logo_path =r'logo.png'  # Altere para o seu caminho se necessário
     imagem = Image.open(logo_path)
     st.logo(imagem)
 
@@ -97,6 +97,4 @@ else:
     """, unsafe_allow_html=True)
 
     # Botão de logout
-
     st.sidebar.button("Sair", on_click=lambda: st.session_state.update(logged_in=False, current_page="Home"), key="logout_button")
-
