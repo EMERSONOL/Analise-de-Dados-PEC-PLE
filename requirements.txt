@@ -1,4 +1,4 @@
-echo "streamlit
+streamlit
 pandas
 plotly
 openpyxl
@@ -8,5 +8,4 @@ Pillow
 requests
 geopandas
 folium
-streamlit-folium" > requirements.txt
-
+streamlit-folium
