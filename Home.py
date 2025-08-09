@@ -61,7 +61,7 @@ else:
         return images
 
     # Pasta de imagens
-    image_folder = r'e:\PEC-PLE\Folder'
+    image_folder = r'Folder'
     images = load_images(image_folder)
 
     if 'current_image' not in st.session_state:
@@ -99,3 +99,4 @@ else:
     # Botão de logout
 
     st.sidebar.button("Sair", on_click=lambda: st.session_state.update(logged_in=False, current_page="Home"), key="logout_button")
+
