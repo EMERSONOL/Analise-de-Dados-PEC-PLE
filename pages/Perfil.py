@@ -19,11 +19,10 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
 # ---------- Funções auxiliares ----------
 @st.cache_data
 def load_data():
-    #file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
-    # Caminho da planilha USB
-    file_url = "E:/atual - PECPLE\PEC-PLE/SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
+    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
     df = pd.read_excel(file_url, engine='openpyxl')  
     return df
+    
 # ------- Função para carregar a bandeira -------------
 def get_country_code(country_name):
     # Dicionário de códigos de países por nome
@@ -285,10 +284,7 @@ def get_flag_url(country_name):
 
 # ---------- Logo ----------
 # Caminho da logo
-logo_path = "e:/PEC-PLE/logo.png"
-
-# Caminho da logo
-#logo_path = "C:/Users/EMERSON/OneDrive/Área de Trabalho/PEC-PLE/logo.png"
+logo_path = "logo.png"
 imagem = Image.open(logo_path)
 st.logo(imagem)
 
@@ -328,10 +324,8 @@ if student_data.empty:
 
 student_data = student_data.iloc[0]
 
-# Caminhos de imagens USB
-photo_folder = r"e:\\PEC-PLE\\Foto dos Alunos"
-# Caminhos de imagens
-#photo_folder = r"C:\\Users\\EMERSON\\OneDrive\\Área de Trabalho\\PEC-PLE\\Foto dos Alunos"
+# Caminhos de imagens github
+photo_folder = r"Foto dos Alunos"
 photo_path = os.path.join(photo_folder, f"{selected_name}.png")
 country_name = student_data.get("País de origem", "Não disponível")
 flag_url = get_flag_url(country_name)
@@ -396,4 +390,5 @@ st.write(f"**2ª tentativa:** {student_data.get('Ano e semestre de realização 
 st.write(f"**Nível de certificação (segunda tentativa):** {student_data.get('Nível de certificação - segunda tentativa', 'Não disponível')}")
 
 # botão de sair
+
 st.sidebar.button("Sair", on_click=logout)
