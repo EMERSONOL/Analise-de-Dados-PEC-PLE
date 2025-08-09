@@ -327,7 +327,7 @@ if student_data.empty:
 student_data = student_data.iloc[0]
 
 # Caminhos de imagens USB
-photo_folder = r"f:\\atual - PECPLE\\PEC-PLE\\Foto dos Alunos"
+photo_folder = r"Foto dos Alunos"
 
 photo_path = os.path.join(photo_folder, f"{selected_name}.png")
 country_name = student_data.get("País de origem", "Não disponível")
@@ -397,3 +397,4 @@ st.write(f"**Nível de certificação (segunda tentativa):** {student_data.get('
 
 # botão de sair
 st.sidebar.button("Sair", on_click=logout)
+
