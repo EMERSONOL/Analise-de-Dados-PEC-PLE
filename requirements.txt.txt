@@ -1,0 +1,11 @@
+echo "streamlit
+pandas
+plotly
+openpyxl
+numpy
+matplotlib
+Pillow
+requests
+geopandas
+folium
+streamlit-folium" > requirements.txt
