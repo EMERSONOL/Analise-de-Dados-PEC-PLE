@@ -63,6 +63,7 @@ def login_form():
         }}
     </style>
     """
+    # Exibe login para usuario  
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
     col1, col2 = st.columns([1.5, 1.5], gap="large")
@@ -79,15 +80,17 @@ def login_form():
             st.markdown('<div class="background-column"></div>', unsafe_allow_html=True)
         else:
             st.warning("Imagem não encontrada. Verifique o caminho do arquivo.")
-
+    # caso o usuario esqueça de preencher algum campo
     if submit_btn:
         if not username or not password:
             st.error("❗ Por favor, preencha todos os campos.")
+        # verifica se o usuario existe e se a senha esta correta 
         elif username in USERS and check_hashes(USERS[username], password):
             st.success(f"✅ Login realizado com sucesso! Bem-vindo(a), {username}.")
             st.session_state["logged_in"] = True
             st.session_state["current_user"] = username
             st.rerun()
+        # se o usuario ou senha estiverem incorretos
         else:
             st.error("❌ Usuário ou senha incorretos.")
 
@@ -101,5 +104,4 @@ if __name__ == "__main__":
         st.write(f"Bem-vindo à sua aplicação, {user}!")
         if st.button("Sair"):
             st.session_state["logged_in"] = False
-
             st.rerun()
