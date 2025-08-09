@@ -13,9 +13,7 @@ def logout():
 # --- VERIFICAÇÃO DE LOGIN ---
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.warning("🔒 Por favor, faça o login para acessar esta página.")
-    # Adiciona um botão para voltar ao login se o usuário não estiver logado
-    if st.button("Ir para Login"):
-        st.switch_page("Home.py")
+    st.switch_page("Home.py")
     st.stop()
 
 # -------------- Carregar os dados ---------------------
@@ -24,6 +22,7 @@ def load_data():
     
     # Link para a planilha - Google Sheets
     file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
+    
     try:
         df = pd.read_excel(file_url)
         return df
@@ -169,7 +168,104 @@ with col3:
         </div>
     """, unsafe_allow_html=True)
     
-    
+# ---- Evolução do Número de Alunos PEC-G por pais com Polígono de Frequência ---- 
+# Agrupando os dados por ano e país
+df_pecg = filtrado_df[["Ano de entrada PEC-PLE", "País de origem"]].dropna()
+df_pecg["Ano de entrada PEC-PLE"] = df_pecg["Ano de entrada PEC-PLE"].astype(int)
+
+# Agrupamento
+df_grouped = df_pecg.groupby(["Ano de entrada PEC-PLE", "País de origem"]).size().reset_index(name="Quantidade")
+
+# Preencher anos ausentes com 0 para garantir exibição contínua
+todos_anos = range(df_grouped["Ano de entrada PEC-PLE"].min(), df_grouped["Ano de entrada PEC-PLE"].max() + 1)
+todos_paises = df_grouped["País de origem"].unique()
+
+# Criar grid completo de (ano, país)
+df_grid = pd.MultiIndex.from_product([todos_anos, todos_paises], names=["Ano de entrada PEC-PLE", "País de origem"]).to_frame(index=False)
+
+# Merge e preencher com zero onde necessário
+df_completo = pd.merge(df_grid, df_grouped, how="left", on=["Ano de entrada PEC-PLE", "País de origem"])
+df_completo["Quantidade"] = df_completo["Quantidade"].fillna(0)
+
+# Criar gráfico de linha com todos os anos visíveis
+st.subheader("")
+st.subheader("📊 Evolução do Número de Alunos PEC-G por País")
+fig = px.line(
+    df_completo,
+    x="Ano de entrada PEC-PLE",
+    y="Quantidade",
+    color="País de origem",
+    markers=True
+)
+
+# Personalização visual 
+fig.update_layout(
+    xaxis_title="Ano de Entrada no PEC-G",
+    yaxis_title="Número de Alunos",
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    font=dict(color="black"),
+    legend_title="País de Origem",
+    showlegend=True,
+    xaxis=dict(
+        tickmode='linear',
+        tick0=min(todos_anos),
+        dtick=1
+    )
+)
+
+# Exibir no Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
+# --- Preparar dados ---
+df_pecg = filtrado_df[["Ano de entrada PEC-PLE", "País de origem"]].dropna()
+df_pecg["Ano de entrada PEC-PLE"] = df_pecg["Ano de entrada PEC-PLE"].astype(int)
+
+# Agrupar dados por ano e país
+df_grouped = df_pecg.groupby(["Ano de entrada PEC-PLE", "País de origem"]).size().reset_index(name="Quantidade")
+
+# Selecionar top 5 países com mais alunos
+top_paises = df_grouped.groupby("País de origem")["Quantidade"].sum().nlargest(5).index.tolist()
+df_top = df_grouped[df_grouped["País de origem"].isin(top_paises)]
+
+# Pivot para preencher anos ausentes com 0
+todos_anos = list(range(df_top["Ano de entrada PEC-PLE"].min(), df_top["Ano de entrada PEC-PLE"].max() + 1))
+df_pivot = df_top.pivot(index="Ano de entrada PEC-PLE", columns="País de origem", values="Quantidade").reindex(todos_anos).fillna(0)
+
+# Criar gráfico de linhas
+fig = go.Figure()
+
+for pais in df_pivot.columns:
+    fig.add_trace(go.Scatter(x=df_pivot.index, y=df_pivot[pais], mode='lines+markers', name=pais))
+
+# Linha pontilhada verde em 2015
+fig.add_shape(
+    type="line",
+    x0=2012, x1=2012,
+    y0=0, y1=df_pivot.max().max(),
+    line=dict(color="green", width=2, dash="dash")
+)
+
+# Layout com todos os anos no eixo X
+st.subheader("")
+st.subheader("📊 Evolução do Número de Alunos PEC-G (Top 5 Países)")
+fig.update_layout(
+    xaxis_title="Ano de Entrada no PEC-G",
+    yaxis_title="Número de Alunos",
+    xaxis=dict(
+        tickmode='linear',
+        tick0=min(todos_anos),
+        dtick=1
+    ),
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    font=dict(color="black"),
+    legend_title="País"
+)
+
+# Mostrar no Streamlit
+st.plotly_chart(fig, use_container_width=True)
+  
 # ------- Número de Alunos por Ano + Polígono de Frequência -------
 
 # Garantir que os anos estejam como strings ordenáveis
@@ -212,6 +308,9 @@ fig.update_layout(
     xaxis=dict(type='category'),
     bargap=0.2
 )
+
+
+
 
 # Exibir no Streamlit
 st.subheader("")
@@ -369,6 +468,55 @@ sexo_pais_counts = filtrado_df.groupby(['País de origem', 'Sexo']).size().reset
 fig_sexo_pais = px.bar(sexo_pais_counts, x='País de origem', y='Quantidade', color='Sexo', barmode='group')
 st.plotly_chart(fig_sexo_pais, use_container_width=True)
 
+# ---- Gráfico de Distribuição dos Níves de Certificado Celpe-bras no Decorrer dos Anos ----
+
+# Obter todos os anos únicos do DataFrame original (mesmo sem certificação)
+todos_anos = sorted(df["Ano de entrada PEC-PLE"].dropna().astype(int).unique())
+
+# Filtrar dados com certificação e limpar nulos
+df_cert = filtrado_df[["Ano de entrada PEC-PLE", "Nível de certificação"]].dropna()
+df_cert["Ano de entrada PEC-PLE"] = df_cert["Ano de entrada PEC-PLE"].astype(int)
+
+# Agrupamento dos dados reais
+df_grouped = df_cert.groupby(["Ano de entrada PEC-PLE", "Nível de certificação"]).size().reset_index(name="Quantidade")
+
+# Todos os níveis únicos (mesmo que não estejam presentes em todos os anos)
+todos_niveis = df_cert["Nível de certificação"].unique()
+
+# Criar grade com todos os pares (ano, nível)
+df_grid = pd.MultiIndex.from_product([todos_anos, todos_niveis], names=["Ano de entrada PEC-PLE", "Nível de certificação"]).to_frame(index=False)
+
+# Mesclar com dados reais e preencher com zero onde faltar
+df_completo = pd.merge(df_grid, df_grouped, on=["Ano de entrada PEC-PLE", "Nível de certificação"], how="left")
+df_completo["Quantidade"] = df_completo["Quantidade"].fillna(0).astype(int)
+
+# Criar histograma empilhado
+fig = px.histogram(
+    df_completo,
+    x="Ano de entrada PEC-PLE",
+    y="Quantidade",
+    color="Nível de certificação",
+    title="📊 Distribuição dos Níveis de Certificação Celpe-Bras no decorrer dos anos",
+    barmode="stack"
+)
+
+# Layout personalizado com fundo branco e anos contínuos
+fig.update_layout(
+    xaxis_title="Ano de Entrada",
+    yaxis_title="Quantidade de Alunos",
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    font=dict(color="black"),
+    legend_title="Nível de Certificação",
+    xaxis=dict(
+        tickmode="linear",
+        tick0=min(todos_anos),
+        dtick=1
+    )
+)
+
+# Exibir no Streamlit
+st.plotly_chart(fig, use_container_width=True)
 
 # --------- Gráfico de Pizza estilo Rosca ---------
 st.subheader("🗺️Distribuição de Alunos por País")
@@ -427,6 +575,4 @@ if "País de origem" in filtrado_df.columns:
     st.plotly_chart(fig_globe, use_container_width=True)
 
 # botão de sair da sessão logada e ir para a pagina home
-
 st.sidebar.button("Sair", on_click=logout)
-
