@@ -12,17 +12,17 @@ def logout():
 # --- VERIFICAÇÃO DE LOGIN ---
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.warning("🔒 Por favor, faça o login para acessar esta página.")
-    if st.button("Ir para Login"):
-        st.switch_page("Home.py")
+    st.switch_page("Home.py")
     st.stop()
 
 # ---------- Funções auxiliares ----------
 @st.cache_data
 def load_data():
     file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
+    
     df = pd.read_excel(file_url, engine='openpyxl')  
     return df
-    
+
 # ------- Função para carregar a bandeira -------------
 def get_country_code(country_name):
     # Dicionário de códigos de países por nome
@@ -75,7 +75,7 @@ def get_country_code(country_name):
  'Colombia': 'co',
  'Comoros': 'km',
  'Congo': 'cg',
- 'Congo, The Democratic Republic of the': 'cd',
+ 'Democratic Republic of the Congo': 'cd',
  'Cook Islands': 'ck',
  'Costa Rica': 'cr',
  'Croatia': 'hr',
@@ -129,7 +129,7 @@ def get_country_code(country_name):
  'Iceland': 'is',
  'India': 'in',
  'Indonesia': 'id',
- 'Iran, Islamic Republic of': '🇮🇷',
+ 'Iran': 'ir',
  'Iraq': 'iq',
  'Ireland': 'ie',
  'Isle of Man': 'im',
@@ -207,6 +207,7 @@ def get_country_code(country_name):
  'Qatar': 'qa',
  'Romania': 'ro',
  'Russian Federation': 'ru',
+ 'Republic of the Congo': 'cg',
  'Rwanda': 'rw',
  'Réunion': 're',
  'Saint Barthélemy': 'bl',
@@ -282,7 +283,8 @@ def get_flag_url(country_name):
         return f"https://flagcdn.com/w80/{code}.png"  # 80px de largura
     return None
 
-# ---------- Logo ----------
+# ---------- Logo ---------
+
 # Caminho da logo
 logo_path = "logo.png"
 imagem = Image.open(logo_path)
@@ -324,8 +326,9 @@ if student_data.empty:
 
 student_data = student_data.iloc[0]
 
-# Caminhos de imagens github
-photo_folder = r"Foto dos Alunos"
+# Caminhos de imagens USB
+photo_folder = r"f:\\atual - PECPLE\\PEC-PLE\\Foto dos Alunos"
+
 photo_path = os.path.join(photo_folder, f"{selected_name}.png")
 country_name = student_data.get("País de origem", "Não disponível")
 flag_url = get_flag_url(country_name)
@@ -335,6 +338,7 @@ st.subheader("🎓 Ficha de Perfil do Aluno")
 
 col1, col2 = st.columns([1, 2])
 
+# --- Foto de perfil e origem do aluno ---
 with col1:
     if os.path.exists(photo_path):
         st.image(photo_path, width=200)
@@ -358,7 +362,7 @@ with col1:
     )
 
     
-
+# --- Dados pessoais do aluno ---
 with col2:
     st.markdown(f"### {student_data.get('Nome', 'Nome não disponível')}")
     st.write(f"**Ano de entrada PEC-PLE:** {student_data.get('Ano de entrada PEC-PLE', 'Não disponível')}")
@@ -369,6 +373,7 @@ with col2:
 
 st.divider()
 
+# --- Informações acadêmicas do aluno ---
 st.subheader("🏛️ Informações Acadêmicas")
 st.write(f"**Sigla IES PEC-PLE:** {student_data.get('Sigla_IES_PEC_PLE', 'Não disponível')}")
 st.write(f"**IES PEC-PLE:** {student_data.get('IES PEC-PLE', 'Não disponível')}")
@@ -383,6 +388,7 @@ st.write(f"**Semestre de ingresso PEC-G:** {student_data.get('Semestre de ingres
 
 st.divider()
 
+# --- Informações Celpe-Bras do aluno ---
 st.subheader("📝 Informações Celpe-Bras")
 st.write(f"**1ª tentativa:** {student_data.get('Ano e semestre de realização do Celpe-Bras - primeira tentativa', 'Não disponível')}")
 st.write(f"**Nível de certificação:** {student_data.get('Nível de certificação', 'Não disponível')}")
@@ -390,5 +396,4 @@ st.write(f"**2ª tentativa:** {student_data.get('Ano e semestre de realização 
 st.write(f"**Nível de certificação (segunda tentativa):** {student_data.get('Nível de certificação - segunda tentativa', 'Não disponível')}")
 
 # botão de sair
-
 st.sidebar.button("Sair", on_click=logout)
