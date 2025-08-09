@@ -39,7 +39,7 @@ if df.empty:
     st.stop()  # Interrompe a execução do aplicativo
 else:
     # ------------- Caminho da logo --------------
-    logo_path = "e:/PEC-PLE/logo.png"
+    logo_path = "logo.png"
     imagem = Image.open(logo_path)
     st.logo(imagem)
 
@@ -429,3 +429,4 @@ if "País de origem" in filtrado_df.columns:
 # botão de sair da sessão logada e ir para a pagina home
 
 st.sidebar.button("Sair", on_click=logout)
+
