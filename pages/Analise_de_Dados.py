@@ -23,13 +23,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
 def load_data():
     
     # Link para a planilha - Google Sheets
-    #file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
-    
-    # Caminho para a planilha Excel - PC
-    #file_url = "C:\\Users\\EMERSON\\OneDrive\\Área de Trabalho\\PEC-PLE\\SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
-
-    # Caminho para a planilha Excel - Pendrive
-    file_url = "E:/atual - PECPLE/PEC-PLE/SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
+    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
     try:
         df = pd.read_excel(file_url)
         return df
@@ -433,4 +427,5 @@ if "País de origem" in filtrado_df.columns:
     st.plotly_chart(fig_globe, use_container_width=True)
 
 # botão de sair da sessão logada e ir para a pagina home
+
 st.sidebar.button("Sair", on_click=logout)
