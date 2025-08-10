@@ -21,7 +21,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
 def load_data():
     
     # Link para a planilha - Google Sheets
-    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/edit?usp=sharing&ouid=103437707688915374025&rtpof=true&sd=true"
+    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
     
     try:
         df = pd.read_excel(file_url)
@@ -576,5 +576,6 @@ if "País de origem" in filtrado_df.columns:
 
 # botão de sair da sessão logada e ir para a pagina home
 st.sidebar.button("Sair", on_click=logout)
+
 
 
