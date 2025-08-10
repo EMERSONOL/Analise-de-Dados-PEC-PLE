@@ -75,6 +75,7 @@ def get_country_code(country_name):
  'Colombia': 'co',
  'Comoros': 'km',
  'Congo': 'cg',
+ 'Costa do Marfim': 'ci'
  'Democratic Republic of the Congo': 'cd',
  'Cook Islands': 'ck',
  'Costa Rica': 'cr',
@@ -397,4 +398,5 @@ st.write(f"**Nível de certificação (segunda tentativa):** {student_data.get('
 
 # botão de sair
 st.sidebar.button("Sair", on_click=logout)
+
 
