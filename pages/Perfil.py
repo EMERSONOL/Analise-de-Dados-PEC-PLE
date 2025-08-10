@@ -208,7 +208,7 @@ def get_country_code(country_name):
  'Qatar': 'qa',
  'Romania': 'ro',
  'Russian Federation': 'ru',
- 'República do Congo , Republic of the Congo': 'cg',
+ 'Republic of the Congo': 'cg',
  'Rwanda': 'rw',
  'Réunion': 're',
  'Saint Barthélemy': 'bl',
@@ -398,6 +398,7 @@ st.write(f"**Nível de certificação (segunda tentativa):** {student_data.get('
 
 # botão de sair
 st.sidebar.button("Sair", on_click=logout)
+
 
 
 
