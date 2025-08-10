@@ -18,7 +18,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
 # ---------- Funções auxiliares ----------
 @st.cache_data
 def load_data():
-    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/edit?usp=sharing&ouid=103437707688915374025&rtpof=true&sd=true"
+    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI"
     
     df = pd.read_excel(file_url, engine='openpyxl')  
     return df
@@ -398,6 +398,7 @@ st.write(f"**Nível de certificação (segunda tentativa):** {student_data.get('
 
 # botão de sair
 st.sidebar.button("Sair", on_click=logout)
+
 
 
 
