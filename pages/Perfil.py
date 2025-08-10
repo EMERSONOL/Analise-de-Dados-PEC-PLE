@@ -18,7 +18,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
 # ---------- Funções auxiliares ----------
 @st.cache_data
 def load_data():
-    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI"
+    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
     
     df = pd.read_excel(file_url, engine='openpyxl')  
     return df
