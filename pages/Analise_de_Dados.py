@@ -17,33 +17,18 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.stop()
 
 # -------------- Carregar os dados ---------------------
-import base64
-import hashlib
-import pandas as pd
-import streamlit as st
-
-# URL original codificada em Base64 (para não aparecer "limpa" no código)
-encoded_url = "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvMXJSUW1YbFZBS1FvY0NmSnlDQ0lzWkdNSlV4ZE12S2RJL2V4cG9ydD9mb3JtYXQ9eGxzeA=="
-
-# Hash SHA256 da URL original (para verificação de integridade)
-expected_hash = "a60a7f9f58bb66d263f2ac444447f8f4763ed88d90fd32f6b3a113a07a5685b3"
-
 @st.cache_data
 def load_data():
-    # Decodifica de Base64
-    file_url = base64.b64decode(encoded_url).decode()
-
-    # Verifica se a URL é a correta usando SHA256
-    if hashlib.sha256(file_url.encode()).hexdigest() != expected_hash:
-        st.error("URL inválida ou alterada!")
-        return pd.DataFrame()
-
+    
+    # Link para a planilha - Google Sheets
+    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
+    
     try:
         df = pd.read_excel(file_url)
         return df
     except Exception as e:
         st.error(f"Erro ao carregar os dados: {e}")
-        return pd.DataFrame()
+        return pd.DataFrame()  # Retorna um DataFrame vazio em caso de erro
 
 df = load_data()
 
