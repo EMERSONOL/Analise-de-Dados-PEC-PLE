@@ -1,5 +1,3 @@
-Claro! Aqui está o relatório reescrito com emojis para deixá-lo mais visual e envolvente:
-
 ---
 
 ## 📊 **Relatório do Sistema de Análise de Dados PEC-G**
