@@ -67,7 +67,7 @@ def login_form():
 
     col1, col2 = st.columns([1.5, 1.5], gap="large")
     with col1:
-        st.markdown("<h2>Login</h2>", unsafe_allow_html=True)
+        st.markdown("<h2>Bem vindo</h2>", unsafe_allow_html=True)
         with st.form('sign_in_form', clear_on_submit=False):
             username = st.text_input('Usuário', placeholder="Digite seu nome de usuário")
             password = st.text_input('Senha', placeholder="Digite sua senha", type='password')
@@ -102,4 +102,5 @@ if __name__ == "__main__":
         if st.button("Sair"):
             st.session_state["logged_in"] = False
             st.rerun()
+
 
