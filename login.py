@@ -66,7 +66,7 @@ def login_form():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
     col1, col2 = st.columns([1.5, 1.5], gap="large")
-    with col1:
+    with col2:
         st.markdown("<h2>Bem vindo</h2>", unsafe_allow_html=True)
         with st.form('sign_in_form', clear_on_submit=False):
             username = st.text_input('Usuário', placeholder="Digite seu nome de usuário")
@@ -74,7 +74,7 @@ def login_form():
             remember_me = st.checkbox("Lembrar-me")
             submit_btn = st.form_submit_button(label="Entrar")
 
-    with col2:
+    with col1:
         if image_base64:
             st.markdown('<div class="background-column"></div>', unsafe_allow_html=True)
         else:
@@ -102,5 +102,6 @@ if __name__ == "__main__":
         if st.button("Sair"):
             st.session_state["logged_in"] = False
             st.rerun()
+
 
 
