@@ -68,5 +68,5 @@ A navegação segue um fluxo lógico 🔀 com opções de:
 
 ### ✅ **5. Conclusão**
 
-O sistema de **Análise de Dados PEC-G** foi desenvolvido para oferecer **usabilidade 👍, controle 🔐 e eficiência ⚡**.
-Sua arquitetura modular 🧩 permite **monitoramento 📊 e gestão estratégica 🗂️** das informações, fortalecendo a administração acadêmica 🎓 e promovendo uma análise detalhada 🔍 dos dados dos alunos estrangeiros 🌍.
+O sistema de **Análise de Dados PEC-G** foi desenvolvido para oferecer **usabilidade, controle e eficiência**.
+Sua arquitetura modular permite **monitoramento e gestão estratégica** das informações, fortalecendo a administração acadêmica e promovendo uma análise detalhada dos dados dos alunos estrangeiros.
