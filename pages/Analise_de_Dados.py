@@ -227,12 +227,19 @@ fig.update_layout(
 # Exibir no Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
-# --- Preparar dados ---
-df_pecg = filtrado_df[["Ano de entrada PEC-PLE", "País de origem"]].dropna()
-df_pecg["Ano de entrada PEC-PLE"] = df_pecg["Ano de entrada PEC-PLE"].astype(int)
+# Preparar df_pecg
+if "Ano de entrada PEC-PLE" in filtrado_df.columns and "País de origem" in filtrado_df.columns:
+    df_pecg = filtrado_df[["Ano de entrada PEC-PLE", "País de origem"]].dropna()
+    
+    if not df_pecg.empty:
+        df_pecg["Ano de entrada PEC-PLE"] = df_pecg["Ano de entrada PEC-PLE"].astype(int)
+        df_grouped = df_pecg.groupby(["Ano de entrada PEC-PLE", "País de origem"]).size().reset_index(name="Quantidade")
+        # 👉 segue o fluxo normal (todos_anos, df_grid, gráfico, etc.)
+    else:
+        st.info("ℹ️ Nenhum dado disponível para gerar evolução por país com os filtros atuais.")
+else:
+    st.error("🚨 As colunas 'Ano de entrada PEC-PLE' e 'País de origem' não foram encontradas nos dados.")
 
-# Agrupar dados por ano e país
-df_grouped = df_pecg.groupby(["Ano de entrada PEC-PLE", "País de origem"]).size().reset_index(name="Quantidade")
 
 # Selecionar top 5 países com mais alunos
 top_paises = df_grouped.groupby("País de origem")["Quantidade"].sum().nlargest(5).index.tolist()
@@ -586,6 +593,7 @@ if "País de origem" in filtrado_df.columns:
 
 # botão de sair da sessão logada e ir para a pagina home
 st.sidebar.button("Sair", on_click=logout)
+
 
 
 
