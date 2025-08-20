@@ -101,7 +101,6 @@ else:
 contagens_cursos = filtrado_df['Curso PEC-G'].value_counts()
 
 # Borda direita em gradiente amarelo → azul, altura fixa, e alinhamento vertical
-
 custom_css = """
 <style>
 .metric-container {
@@ -130,7 +129,6 @@ custom_css = """
 </style>
 """
 
-# ------- Analise de Dados do PEC-PLE -------
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # Criar colunas para múltiplas métricas
@@ -148,8 +146,13 @@ with col1:
 
 # Curso com Mais Alunos
 with col2:
-    top_course = contagens_cursos.idxmax()
-    top_course_count = contagens_cursos.max()
+    if not contagens_cursos.empty:
+        top_course = contagens_cursos.idxmax()
+        top_course_count = contagens_cursos.max()
+    else:
+        top_course = "N/A"
+        top_course_count = 0
+
     st.markdown(f"""
         <div class="metric-container">
             <div class="metric-label">Curso com Mais Alunos: {top_course}</div>
@@ -160,14 +163,20 @@ with col2:
 # País com Mais Alunos
 with col3:
     students_per_country = filtrado_df['País de origem'].value_counts()
-    most_students_country = students_per_country.idxmax()
-    most_students_count = students_per_country.max()
+    if not students_per_country.empty:
+        most_students_country = students_per_country.idxmax()
+        most_students_count = students_per_country.max()
+    else:
+        most_students_country = "N/A"
+        most_students_count = 0
+
     st.markdown(f"""
         <div class="metric-container">
             <div class="metric-label">País com Mais Alunos: {most_students_country}</div>
             <div class="metric-value">{most_students_count}</div>
         </div>
     """, unsafe_allow_html=True)
+
     
 # ---- Evolução do Número de Alunos PEC-G por pais com Polígono de Frequência ---- 
 # Agrupando os dados por ano e país
@@ -577,6 +586,7 @@ if "País de origem" in filtrado_df.columns:
 
 # botão de sair da sessão logada e ir para a pagina home
 st.sidebar.button("Sair", on_click=logout)
+
 
 
 
