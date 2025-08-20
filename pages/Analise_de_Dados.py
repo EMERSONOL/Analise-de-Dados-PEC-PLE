@@ -179,34 +179,34 @@ with col3:
 
     
 # ---- Evolução do Número de Alunos PEC-G por pais com Polígono de Frequência ---- 
-# Agrupando os dados por ano e país
-df_pecg = filtrado_df[["Ano de entrada PEC-PLE", "País de origem"]].dropna()
-df_pecg["Ano de entrada PEC-PLE"] = df_pecg["Ano de entrada PEC-PLE"].astype(int)
-
 # Agrupamento
 df_grouped = df_pecg.groupby(["Ano de entrada PEC-PLE", "País de origem"]).size().reset_index(name="Quantidade")
 
 # Preencher anos ausentes com 0 para garantir exibição contínua
-todos_anos = range(df_grouped["Ano de entrada PEC-PLE"].min(), df_grouped["Ano de entrada PEC-PLE"].max() + 1)
-todos_paises = df_grouped["País de origem"].unique()
+if not df_grouped.empty:
+    todos_anos = range(df_grouped["Ano de entrada PEC-PLE"].min(), df_grouped["Ano de entrada PEC-PLE"].max() + 1)
+    todos_paises = df_grouped["País de origem"].unique()
 
-# Criar grid completo de (ano, país)
-df_grid = pd.MultiIndex.from_product([todos_anos, todos_paises], names=["Ano de entrada PEC-PLE", "País de origem"]).to_frame(index=False)
+    # Criar grid completo de (ano, país)
+    df_grid = pd.MultiIndex.from_product([todos_anos, todos_paises], names=["Ano de entrada PEC-PLE", "País de origem"]).to_frame(index=False)
 
-# Merge e preencher com zero onde necessário
-df_completo = pd.merge(df_grid, df_grouped, how="left", on=["Ano de entrada PEC-PLE", "País de origem"])
-df_completo["Quantidade"] = df_completo["Quantidade"].fillna(0)
+    # Merge e preencher com zero onde necessário
+    df_completo = pd.merge(df_grid, df_grouped, how="left", on=["Ano de entrada PEC-PLE", "País de origem"])
+    df_completo["Quantidade"] = df_completo["Quantidade"].fillna(0)
 
-# Criar gráfico de linha com todos os anos visíveis
-st.subheader("")
-st.subheader("📊 Evolução do Número de Alunos PEC-G por País")
-fig = px.line(
-    df_completo,
-    x="Ano de entrada PEC-PLE",
-    y="Quantidade",
-    color="País de origem",
-    markers=True
-)
+    # Criar gráfico
+    st.subheader("📊 Evolução do Número de Alunos PEC-G por País")
+    fig = px.line(
+        df_completo,
+        x="Ano de entrada PEC-PLE",
+        y="Quantidade",
+        color="País de origem",
+        markers=True
+    )
+    st.plotly_chart(fig, use_container_width=True)
+else:
+    st.info("ℹ️ Nenhum dado disponível para gerar a evolução por país com os filtros atuais.")
+
 
 # Personalização visual 
 fig.update_layout(
@@ -586,6 +586,7 @@ if "País de origem" in filtrado_df.columns:
 
 # botão de sair da sessão logada e ir para a pagina home
 st.sidebar.button("Sair", on_click=logout)
+
 
 
 
