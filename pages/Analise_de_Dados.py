@@ -24,12 +24,6 @@ def load_data():
     
     # Link para a planilha - Google Sheets
     file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
-    
-    # Caminho para a planilha Excel - PC
-    #file_url = "C:\\Users\\EMERSON\\OneDrive\\Área de Trabalho\\PEC-PLE\\SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
-
-    # Caminho para a planilha Excel - Pendrive
-    #file_url = "F:/atual - PECPLE/PEC-PLE/SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
     try:
         df = pd.read_excel(file_url)
         return df
@@ -45,7 +39,7 @@ if df.empty:
     st.stop()  # Interrompe a execução do aplicativo
 else:
     # ------------- Caminho da logo --------------
-    logo_path = "f:C:\Users\EMERSON\OneDrive\Documentos\atual - PECPLE\PEC-PLE\logo.png"
+    logo_path = "logo.png"
     imagem = Image.open(logo_path)
     st.logo(imagem)
 
