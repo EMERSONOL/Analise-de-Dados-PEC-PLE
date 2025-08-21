@@ -14,8 +14,7 @@ def logout():
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.warning("🔒 Por favor, faça o login para acessar esta página.")
     # Adiciona um botão para voltar ao login se o usuário não estiver logado
-    if st.button("Ir para Login"):
-        st.switch_page("Home.py")
+    st.switch_page("Home.py")
     st.stop()
 
 # -------------- Carregar os dados ---------------------
@@ -577,3 +576,4 @@ if "País de origem" in filtrado_df.columns:
 
 # botão de sair da sessão logada e ir para a pagina home
 st.sidebar.button("Sair", on_click=logout)
+
