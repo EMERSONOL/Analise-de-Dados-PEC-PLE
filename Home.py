@@ -86,7 +86,7 @@ else:
     # Texto explicativo
     st.markdown("""
         <div class="justificado">
-        <b>O Programa de Estudantes-Convênio de Português como Língua Estrangeira (PEC-PLE) é um programa do governo brasileiro por meio do qual é ofertado curso gratuito de língua portuguesa e cultura brasileira para estudantes estrangeiros oriundos de países não-lusófonos que desejam ingressar na graduação no Brasil pelo Programa de Estudantes-Convênio de Graduação (PEC-G), mas ainda não têm proficiência suficiente no idioma. Ao final do curso, que dura cerca de um ano, os estudantes devem se submeter ao exame Celpe-Bras para obter a certificação necessária para iniciar sua formação acadêmica no país.  
+        <p>O Programa de Estudantes-Convênio de Português como Língua Estrangeira (PEC-PLE) é um programa do governo brasileiro por meio do qual é ofertado curso gratuito de língua portuguesa e cultura brasileira para estudantes estrangeiros oriundos de países não-lusófonos que desejam ingressar na graduação no Brasil pelo Programa de Estudantes-Convênio de Graduação (PEC-G), mas ainda não têm proficiência suficiente no idioma. Ao final do curso, que dura cerca de um ano, os estudantes devem se submeter ao exame Celpe-Bras para obter a certificação necessária para iniciar sua formação acadêmica no país.  
 Implementado em parceria entre o Ministério das Relações Exteriores (MRE) e o Ministério da Educação (MEC), o programa desempenha um papel fundamental na cooperação educacional internacional ao fortalecer laços acadêmicos e culturais com países em desenvolvimento.
 A análise de dados aplicada ao PEC-PLE permite um entendimento mais profundo sobre o perfil dos alunos, a distribuição geográfica, a evolução do programa ao longo dos anos e o impacto nas instituições de ensino superior brasileiras. Através da coleta e processamento preciso das informações, é possível identificar padrões, otimizar processos seletivos e aprimorar estratégias para melhor atender às demandas dos estudantes e universidades participantes.
 Além disso, a análise criteriosa dos dados garante maior transparência e eficiência na gestão do programa, permitindo que tomadores de decisão embasem políticas educacionais de forma mais assertiva. O monitoramento contínuo também contribui para avaliar o retorno dos alunos aos seus países de origem, verificando os impactos da formação acadêmica em suas comunidades e promovendo melhorias na cooperação internacional.
@@ -97,5 +97,6 @@ Este dashboard interativo foi desenvolvido para proporcionar uma visão clara e 
 
     # Botão de logout
     st.sidebar.button("Sair", on_click=lambda: st.session_state.update(logged_in=False, current_page="Home"), key="logout_button")
+
 
 
