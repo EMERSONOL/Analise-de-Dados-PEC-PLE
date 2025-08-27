@@ -130,7 +130,7 @@ def get_country_code(country_name):
  'Iceland': 'is',
  'India': 'in',
  'Indonesia': 'id',
- 'Iran': 'ir',
+ 'Iran': 'Irã',
  'Iraq': 'iq',
  'Ireland': 'ie',
  'Isle of Man': 'im',
@@ -398,6 +398,7 @@ st.write(f"**Nível de certificação (segunda tentativa):** {student_data.get('
 
 # botão de sair
 st.sidebar.button("Sair", on_click=logout)
+
 
 
 
