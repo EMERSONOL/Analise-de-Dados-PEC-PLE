@@ -4,7 +4,7 @@ import os
 import datetime
 
 # Caminho fixo do Excel
-ARQUIVO_EXCEL = r"C:\Users\EMERSON\OneDrive\Documentos\SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
+ARQUIVO_EXCEL = "SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
 
 # Colunas esperadas
 CAMPOS_ALUNO = [
@@ -157,3 +157,4 @@ with tab3:
             file_name="alunos.csv",
             mime="text/csv"
         )
+
