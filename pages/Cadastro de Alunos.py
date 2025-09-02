@@ -46,7 +46,7 @@ with tab1:
             ano_entrada = st.text_input("Ano de entrada PEC-PLE")
             nome = st.text_input("Nome")
             pais = st.text_input("País de origem")
-            sexo = st.selectbox("Sexo", ["Masculino", "Feminino", "Outro"])
+            sexo = st.selectbox("Gênero", ["Masculino", "Feminino", "Outro", "Não informado"])
             nascimento = st.date_input(
     "Data de nascimento",
     min_value=datetime.date(1900, 1, 1),
@@ -157,4 +157,5 @@ with tab3:
             file_name="alunos.csv",
             mime="text/csv"
         )
+
 
