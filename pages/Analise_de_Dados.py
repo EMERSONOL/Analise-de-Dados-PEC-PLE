@@ -87,7 +87,7 @@ else:
     else:
         # -------Inicio do Dashboard---------
         # Título
-        st.title("📊 Análise de Dados PEC-PLE")
+        st.title("Gerenciamento de Dados PEC-PLE /UFRJ 📊")
 
         # Subtítulo
         st.subheader("📋 Dados Tratados")
@@ -576,5 +576,6 @@ if "País de origem" in filtrado_df.columns:
 
 # botão de sair da sessão logada e ir para a pagina home
 st.sidebar.button("Sair", on_click=logout)
+
 
 
