@@ -46,7 +46,7 @@ else:
     """, unsafe_allow_html=True)
 
     # Título da página
-    st.markdown("<h1 style='text-align: center;'>Sistema de Gerenciamento de Dados PEC-PLE /UFRJ 📊</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Gerenciamento de Dados PEC-PLE /UFRJ 📊</h1>", unsafe_allow_html=True)
 
     # Função para carregar imagens da galeria
     def load_images(image_folder, target_width=800):
@@ -97,6 +97,7 @@ Este dashboard interativo foi desenvolvido para proporcionar uma visão clara e 
 
     # Botão de logout
     st.sidebar.button("Sair", on_click=lambda: st.session_state.update(logged_in=False, current_page="Home"), key="logout_button")
+
 
 
 
