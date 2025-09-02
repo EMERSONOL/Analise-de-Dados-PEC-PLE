@@ -6,7 +6,7 @@ import os
 
 # -------------- pagina de inicio ---------------------
 # Configura a largura da página
-st.set_page_config(page_title="Análise de Dados do PEC-PLE", layout="wide")
+st.set_page_config(page_title="Sistema PEC-PLE/UFRJ", layout="wide")
 
 # Agora importa o login
 from login import login_form
@@ -46,7 +46,7 @@ else:
     """, unsafe_allow_html=True)
 
     # Título da página
-    st.markdown("<h1 style='text-align: center;'>Análise de Dados do PEC-PLE e PEC-G 📊</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Sistema de Gerenciamento de Dados PEC-PLE /UFRJ 📊</h1>", unsafe_allow_html=True)
 
     # Função para carregar imagens da galeria
     def load_images(image_folder, target_width=800):
@@ -97,6 +97,7 @@ Este dashboard interativo foi desenvolvido para proporcionar uma visão clara e 
 
     # Botão de logout
     st.sidebar.button("Sair", on_click=lambda: st.session_state.update(logged_in=False, current_page="Home"), key="logout_button")
+
 
 
 
