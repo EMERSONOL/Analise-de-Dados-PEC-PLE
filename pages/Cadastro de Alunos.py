@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import datetime
+from PIL import Image
 
 # --- FUNÇÃO DE LOGOUT ---
 def logout():
@@ -174,6 +175,7 @@ with tab3:
             file_name="alunos.csv",
             mime="text/csv"
         )
+
 
 
 
