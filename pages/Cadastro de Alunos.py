@@ -3,6 +3,23 @@ import pandas as pd
 import os
 import datetime
 
+# --- FUNÇÃO DE LOGOUT ---
+def logout():
+    st.session_state["logged_in"] = False
+    st.rerun()
+
+# --- VERIFICAÇÃO DE LOGIN ---
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.warning("🔒 Por favor, faça o login para acessar esta página.")
+    st.switch_page("Home.py")
+    st.stop()
+
+# ---------- Logo ---------
+# Caminho da logo
+logo_path = "logo.png"
+imagem = Image.open(logo_path)
+st.logo(imagem)
+
 # Caminho fixo do Excel
 ARQUIVO_EXCEL = "SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
 
@@ -157,5 +174,6 @@ with tab3:
             file_name="alunos.csv",
             mime="text/csv"
         )
+
 
 
