@@ -63,7 +63,6 @@ else:
     # Filtros
     Filtro_ano = st.sidebar.multiselect("Selecione Ano de Entrada", df["Ano de entrada PEC-PLE"].unique())
     Filtro_Pais = st.sidebar.multiselect("Selecione País(es) de Origem", df["País de origem"].unique())
-    filtro_universidade = st.sidebar.multiselect("Selecione Universidade PEC-G", df["IES PEC-G"].unique())
     filtro_curso = st.sidebar.multiselect("Filtrar por Curso PEC-G", df["Curso PEC-G"].unique())
     filtro_sexo = st.sidebar.multiselect("Filtrar por Sexo", df["Sexo"].unique())
 
@@ -74,8 +73,6 @@ else:
         filtrado_df = filtrado_df[filtrado_df["Ano de entrada PEC-PLE"].isin(Filtro_ano)]
     if Filtro_Pais:
         filtrado_df = filtrado_df[filtrado_df["País de origem"].isin(Filtro_Pais)]
-    if filtro_universidade:
-        filtrado_df = filtrado_df[filtrado_df["IES PEC-G"].isin(filtro_universidade)]
     if filtro_curso:
         filtrado_df = filtrado_df[filtrado_df["Curso PEC-G"].isin(filtro_curso)]
     if filtro_sexo:
@@ -576,6 +573,3 @@ if "País de origem" in filtrado_df.columns:
 
 # botão de sair da sessão logada e ir para a pagina home
 st.sidebar.button("Sair", on_click=logout)
-
-
-
