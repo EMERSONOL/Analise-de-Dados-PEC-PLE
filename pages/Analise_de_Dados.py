@@ -20,16 +20,21 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
 # -------------- Carregar os dados ---------------------
 @st.cache_data
 def load_data():
+    # Nome exato do arquivo que você baixou
+    file_path = "SISTEMA DE GERENCIAMENTO DE DADOS.csv"
     
-    # Link para a planilha - Github
-    file_url = "SISTEMA DE GERENCIAMENTO DE DADOS.xlsx"
     try:
-        df = pd.read_excel(file_url)
+        # O Pandas lê arquivos CSV muito mais rápido que Excel
+        df = pd.read_csv(file_path)
         return df
+    except FileNotFoundError:
+        st.error(f"Arquivo não encontrado: {file_path}. Verifique se ele está na mesma pasta do script.")
+        return pd.DataFrame()
     except Exception as e:
         st.error(f"Erro ao carregar os dados: {e}")
-        return pd.DataFrame()  # Retorna um DataFrame vazio em caso de erro
+        return pd.DataFrame()
 
+# Chama a função para carregar os dados
 df = load_data()
 
 # Verificar se o DataFrame está vazio
@@ -572,4 +577,5 @@ if "País de origem" in filtrado_df.columns:
     st.plotly_chart(fig_globe, use_container_width=True)
 
 # botão de sair da sessão logada e ir para a pagina home
+
 st.sidebar.button("Sair", on_click=logout)
