@@ -18,10 +18,22 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
 # ---------- Funções auxiliares ----------
 @st.cache_data
 def load_data():
-    file_url = "https://docs.google.com/spreadsheets/d/1rRQmXlVAKQocCfJy0CIsZGMJUxdMvKdI/export?format=xlsx"
+    # Nome exato do arquivo que você baixou
+    file_path = "SISTEMA DE GERENCIAMENTO DE DADOS.csv"
     
-    df = pd.read_excel(file_url, engine='openpyxl')  
-    return df
+    try:
+        # O Pandas lê arquivos CSV muito mais rápido que Excel
+        df = pd.read_csv(file_path)
+        return df
+    except FileNotFoundError:
+        st.error(f"Arquivo não encontrado: {file_path}. Verifique se ele está na mesma pasta do script.")
+        return pd.DataFrame()
+    except Exception as e:
+        st.error(f"Erro ao carregar os dados: {e}")
+        return pd.DataFrame()
+
+# Chama a função para carregar os dados
+df = load_data()
 
 # ------- Função para carregar a bandeira -------------
 def get_country_code(country_name):
@@ -398,6 +410,7 @@ st.write(f"**Nível de certificação (segunda tentativa):** {student_data.get('
 
 # botão de sair
 st.sidebar.button("Sair", on_click=logout)
+
 
 
 
